@@ -33,7 +33,7 @@ export class Assert{
      * @param {{expected:String, other:String}} message 
      */
     #assertion(result, value, expected, message = null){
-        let data = {value: null};
+        let data = { value: null };
         if(message !== null){
             data = {};
             data[message.other] = value;
