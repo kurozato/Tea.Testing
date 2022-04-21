@@ -1,8 +1,5 @@
 # Tea.Testing
 
-![Tea.Testing](https://github.com/kurozato/Tea.Testing/blob/main/icon/icon.png "Tea.Testing")
-
-
 ## GETTING STARTED 
 
 import tea.js :
@@ -32,6 +29,23 @@ testing
                 assert.notStrictEqual('1', 1);
             })
     .run();
+```
+or use like mocha.(mocha is great)
+```js
+tea.setup('mocha'); // or tea.setup('global');
+
+describe('title1', ()=>{
+    describe('title11', ()=>{
+        it('test-ok', ()=>{
+            assert.ok();
+        });
+        it('test-fail', ()=>{
+            assert.fail();
+        });
+    });
+});
+
+tea.run();
 ```
 Live Server : Go Live
 
