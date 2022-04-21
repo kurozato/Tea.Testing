@@ -8,27 +8,40 @@ testing
     .describe('title01')
         .describe('title02')
             .describe('title03-1')
-                .case('test01',()=>{ })
-                .case('test02',()=>{ let n = null; n.toString();})
+                .it('test01',()=>{ })
+                .it('test02',()=>{ let n = null; n.toString();})
             .describe('title03-2')
-                .case('fail', () => {
+                .it('fail', () => {
                     assert.fail();
                 })
-                .case('ok', ()=>{
+                .it('ok', ()=>{
                     assert.ok();
                 })
-                .case('isTrue', ()=>{
+                .it('isTrue', ()=>{
                     assert.isTrue(true);
                 })
-                .case('equal', ()=>{
+                .it('equal', ()=>{
                     assert.equal('1', 1);
                 })
-                .case('notStrictEqual', ()=>{
+                .it('notStrictEqual', ()=>{
                     assert.notStrictEqual('1', 1);
                 })
     .run();
 
 
 
+    tea.setup('mocha');
 
+    describe('title1', ()=>{
+        describe('title11', ()=>{
+            it('test-ok', ()=>{
+                assert.ok();
+            });
+            it('test-fail', ()=>{
+                assert.fail();
+            });
+        });
+    });
+
+    tea.run();
     

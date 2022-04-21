@@ -33,7 +33,7 @@ export class Testing{
      * @param {string} title 
      * @param {Function} fn 
      */
-    #case(testing, title, fn){
+    #it(testing, title, fn){
         testing = testing || [];
         testing.push({title:title, test:fn});
     }
@@ -95,7 +95,7 @@ export class Testing{
         //before describe call?
         if(this.#isDescribe) //called describe
             last.append(title);
-        else //called case
+        else //called it
             last.parent.append(title);
         
         this.#isDescribe = true; //call describe
@@ -107,13 +107,13 @@ export class Testing{
      * @param {String} title 
      * @param {Function} fn 
      */
-    case(title, fn){
+    it(title, fn){
         const last = this.#describe.last();
         //last children
         const d = last.parent.lastChild();
-        this.#case(d.testCases, title, fn);
+        this.#it(d.testCases, title, fn);
 
-        this.#isDescribe = false; //call case
+        this.#isDescribe = false; //call it
         return this;
     }
 
