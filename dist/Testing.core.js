@@ -6,6 +6,11 @@ export class Testing{
     #testCode;
     #describe = new Describe();
     #isDescribe = true;
+
+    #before = [];
+    #beforeEach = [];
+    #after = [];
+    #afterEach = [];
     constructor(){
 
         /** console message color **/
@@ -56,30 +61,46 @@ export class Testing{
                 console.group('Test case: [ ' + tesing.title + ' ]');
                 //Output test code
                 this.#testCode(tesing.test);
+                //beforeErch
+                for(const bfrFn of this.#beforeEach){
+                    bfrFn();
+                }
                 //run unit test
                 const result = tesing.test();
                 //nomarl test?
                 if(result === undefined){
                     this.#success('Assertion success.');
                     console.groupEnd();
+                    for(const aftFn of this.#afterEach){
+                        aftFn();
+                    }
                 }
                 //Promise?
                 if(result !== undefined && result !== null && result.getName() ===  'Promise'){
                     result
                         .then(()=>{
                             this.#success('Assertion success.');
-                            console.groupEnd();
+                            //console.groupEnd();
                         })
                         .catch((error)=>{
                             console.error(error);
+                            //console.groupEnd();
+                        })
+                        .finally(()=>{
                             console.groupEnd();
-                        });        
+                            for(const aftFn of this.#afterEach){
+                                aftFn();
+                            }
+                        });    
                 }         
                     
             } catch (error) {
                 //Output error
                 console.error(error);
                 console.groupEnd();
+                for(const aftFn of this.#afterEach){
+                    aftFn();
+                }
             }
             //'finally' not used for 'console.groupEnd()'
         }
@@ -123,9 +144,29 @@ export class Testing{
     clear(){
         this.#describe = new Describe('//// Unit Tests ////');
         this.#isDescribe = true;
+        this.#before = [];
+        this.#beforeEach = [];
+        this.#after = [];
+        this.#afterEach = [];
+    }
+
+    before(fn){
+        this.#before.push(fn);
+    }
+    after(fn){
+        this.#after.push(fn);
+    }
+    beforeEach(fn){
+        this.#beforeEach.push(fn);
+    }
+    afterEach(fn){
+        this.#afterEach.push(fn);
     }
 
     run(){
+        for(const bfrFn of this.#before){
+            bfrFn();
+        }
         //group start
         this.#describe.entries(describe => {
             if(!describe.isLast())
@@ -146,5 +187,8 @@ export class Testing{
             if(!describe.isLast())
                 console.groupEnd();
         });
+        for(const aftFn of this.#after){
+            aftFn();
+        }
     }
 }

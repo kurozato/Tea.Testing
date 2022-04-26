@@ -31,7 +31,10 @@ testing
 
 
     tea.setup('mocha');
-
+    tea.clear();
+    beforeEach(()=>{
+        console.log('-- beforeEach --')
+    });
     describe('title1', ()=>{
         describe('title11', ()=>{
             it('test-ok', ()=>{
