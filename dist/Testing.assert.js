@@ -33,12 +33,13 @@ export class Assert{
      * @param {{expected:String, other:String}} message 
      */
     #assertion(result, value, expected, message = null){
-        let data = { value: null };
+        const data = {};
         if(message !== null){
-            data = {};
             data[message.other] = value;
             data[message.expected] = expected;
         }
+        else
+            data['value'] = null;
 
         if(!result){
             console.error('Assertion failed:', data);
